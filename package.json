@@ -1,5 +1,6 @@
 {
-  "name": "nuxt-app",
+  "name": "operation-nexus",
+  "version": "0.1.0-demo",
   "private": true,
   "type": "module",
   "scripts": {
