@@ -50,6 +50,13 @@
         }
     }
 
+    &.github {
+        &:hover {
+            background: linear-gradient(135deg, #333 0%, #24292e 100%);
+            box-shadow: 0 8px 24px rgba(36, 41, 46, 0.4);
+        }
+    }
+
     svg {
         width: 24px;
         height: 24px;
