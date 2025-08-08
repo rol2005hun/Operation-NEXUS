@@ -1,0 +1,15 @@
+@use '@/assets/scss/variables' as *;
+
+.app-evidence-locker {
+    position: relative;
+    height: 100%;
+    background: $window-bg;
+    display: flex;
+    flex-direction: column;
+
+    .evidence-content {
+        flex: 1;
+        padding: 1rem;
+        overflow-y: auto;
+    }
+}

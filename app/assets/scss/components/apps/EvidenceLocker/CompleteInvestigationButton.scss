@@ -1,0 +1,55 @@
+@use '@/assets/scss/variables' as *;
+
+.complete-investigation {
+    padding: 1.5rem;
+    background: linear-gradient(145deg, rgba(0, 122, 204, 0.1), rgba(0, 168, 255, 0.05));
+    border: 2px solid rgba(0, 122, 204, 0.3);
+    border-radius: 12px;
+    text-align: center;
+
+    .complete-btn {
+        background: linear-gradient(145deg, #007acc, #0056b3);
+        color: white;
+        border: none;
+        padding: 12px 30px;
+        border-radius: 8px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(0, 122, 204, 0.3);
+
+        &:hover:not(:disabled) {
+            background: linear-gradient(145deg, #0056b3, #004085);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 122, 204, 0.4);
+        }
+
+        &:disabled {
+            background: #666;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+    }
+
+    .complete-hint {
+        margin: 10px 0 0 0;
+        color: $text-primary;
+        font-weight: 500;
+    }
+}
+
+.investigation-hints {
+    margin-top: 1rem;
+    padding: 1rem;
+    background: rgba(255, 193, 7, 0.05);
+    border: 1px solid rgba(255, 193, 7, 0.2);
+    border-radius: 8px;
+
+    .hint-text {
+        color: $text-primary;
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+    }
+}

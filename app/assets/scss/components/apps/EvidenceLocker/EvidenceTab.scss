@@ -1,0 +1,212 @@
+@use '@/assets/scss/variables' as *;
+@use 'sass:color';
+
+.progress-section {
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    background: $bg-secondary;
+    border-radius: 8px;
+
+    h3 {
+        color: $text-primary;
+        margin-bottom: 1.5rem;
+        font-size: 1.1rem;
+    }
+
+    .progress-bar {
+        height: 8px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 4px;
+        overflow: hidden;
+        margin-bottom: 1rem;
+
+        .progress-fill {
+            height: 100%;
+            transition: width 0.3s ease;
+            border-radius: 4px;
+
+            &.progress-low {
+                background: linear-gradient(90deg, #ffd700, #ffa500);
+            }
+
+            &.progress-medium {
+                background: linear-gradient(90deg, #1e90ff, #4169e1);
+            }
+
+            &.progress-high {
+                background: linear-gradient(90deg, #32cd32, #228b22);
+            }
+        }
+    }
+
+    .progress-text {
+        color: $text-secondary;
+        text-align: center;
+        font-size: 1rem;
+    }
+}
+
+.evidence-section {
+    margin-bottom: 2rem;
+
+    h3 {
+        color: $text-primary;
+        margin-bottom: 1rem;
+        font-size: 1rem;
+    }
+}
+
+.evidence-list {
+    .no-evidence {
+        text-align: center;
+        padding: 2rem;
+        color: $text-secondary;
+        background: $bg-secondary;
+        border-radius: 8px;
+        border: 2px dashed #444;
+    }
+
+    .evidence-item {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        background: $bg-secondary;
+        padding: 1rem;
+        border-radius: 8px;
+        margin-bottom: 1rem;
+        border: 1px solid #444;
+        transition: all 0.2s ease;
+        position: relative;
+
+        &:hover {
+            border-color: $accent-blue;
+            background: color.adjust($bg-secondary, $lightness: 2%);
+
+            .evidence-actions {
+                opacity: 1;
+            }
+        }
+
+        &.important {
+            border-left: 4px solid $accent-red;
+
+            .evidence-icon {
+                color: $accent-red;
+            }
+        }
+
+        .evidence-icon {
+            font-size: 2rem;
+            color: $accent-blue;
+        }
+
+        .evidence-details {
+            flex: 1;
+
+            h4 {
+                margin: 0 0 0.5rem 0;
+                color: $text-primary;
+                font-size: 1rem;
+            }
+
+            p {
+                margin: 0 0 0.5rem 0;
+                color: $text-secondary;
+                line-height: 1.4;
+            }
+
+            .evidence-meta {
+                display: flex;
+                gap: 1rem;
+                font-size: 0.8rem;
+
+                .evidence-type {
+                    color: $accent-blue;
+                    font-weight: 600;
+                }
+
+                .evidence-time {
+                    color: $text-muted;
+                }
+            }
+        }
+
+        .evidence-actions {
+            opacity: 0;
+            transition: opacity 0.2s ease;
+            display: flex;
+            align-items: center;
+
+            .delete-evidence-btn {
+                background: transparent;
+                border: none;
+                color: $text-muted;
+                cursor: pointer;
+                font-size: 1.2rem;
+                padding: 0.5rem;
+                border-radius: 4px;
+                transition: all 0.2s ease;
+
+                &:hover {
+                    background: rgba($accent-red, 0.2);
+                    color: $accent-red;
+                }
+            }
+        }
+    }
+}
+
+.evidence-detail-view {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background: $bg-secondary;
+    border-left: 1px solid #444;
+
+    .detail-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem;
+        border-bottom: 1px solid #444;
+        background: $bg-secondary;
+
+        h3 {
+            margin: 0;
+            color: $text-primary;
+            font-size: 1.2rem;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: $text-secondary;
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 4px;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+
+            &:hover {
+                background: rgba(255, 255, 255, 0.1);
+                color: $text-primary;
+            }
+        }
+    }
+
+    .detail-content {
+        flex: 1;
+        padding: 1.5rem;
+        overflow-y: auto;
+
+        .detail-description {
+            margin-bottom: 2rem;
+
+            p {
+                color: $text-secondary;
+                line-height: 1.5;
+                margin: 0;
+            }
+        }
+    }
+}

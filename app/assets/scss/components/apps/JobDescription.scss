@@ -1,0 +1,335 @@
+@use '@/assets/scss/variables' as *;
+@use 'sass:color';
+
+.app-job-description {
+    height: 100%;
+    background: $window-bg;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.job-description-header {
+    background: linear-gradient(135deg, $bg-secondary 0%, color.adjust($bg-secondary, $lightness: 5%) 100%);
+    padding: 2rem;
+    border-bottom: 3px solid $accent-blue;
+    position: relative;
+
+    &::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: linear-gradient(90deg, $accent-blue, $accent-orange, $accent-blue);
+    }
+
+    h2 {
+        margin: 0 0 1rem 0;
+        color: $text-primary;
+        font-size: 1.6rem;
+        font-weight: 700;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .job-description-meta {
+        display: flex;
+        gap: 2rem;
+        font-size: 0.9rem;
+        color: $text-muted;
+
+        .case-id {
+            font-weight: bold;
+            color: $accent-orange;
+            background: rgba($accent-orange, 0.1);
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+        }
+
+        .classification {
+            color: $accent-red;
+            font-weight: bold;
+            background: rgba($accent-red, 0.1);
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+    }
+}
+
+.job-description-content {
+    padding: 2rem;
+    flex: 1;
+    max-width: 100%;
+}
+
+.investigation-brief {
+    margin-bottom: 2rem;
+
+    h3 {
+        color: $accent-blue;
+        margin-bottom: 1.5rem;
+        font-size: 1.4rem;
+        font-weight: 600;
+        position: relative;
+
+        &::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 3px;
+            background: $accent-blue;
+            margin-top: 0.5rem;
+            border-radius: 2px;
+        }
+    }
+
+    h4 {
+        color: $text-primary;
+        margin: 2rem 0 1rem 0;
+        font-size: 1.2rem;
+        font-weight: 600;
+        border-left: 4px solid $accent-blue;
+        padding-left: 1rem;
+        background: rgba($accent-blue, 0.05);
+        padding: 0.75rem 1rem;
+        border-radius: 0 6px 6px 0;
+    }
+
+    p {
+        line-height: 1.7;
+        color: $text-secondary;
+        margin-bottom: 1.25rem;
+        font-size: 1rem;
+    }
+
+    ol {
+        list-style: none;
+        padding: 0;
+        margin: 1rem 0;
+        counter-reset: objective-counter;
+
+        li {
+            position: relative;
+            padding: 1rem 0 1rem 3rem;
+            margin-bottom: 1rem;
+            color: $text-secondary;
+            background: rgba($accent-orange, 0.03);
+            border-left: 3px solid $accent-orange;
+            border-radius: 0 6px 6px 0;
+            counter-increment: objective-counter;
+            transition: all 0.2s ease;
+
+            &:hover {
+                background: rgba($accent-orange, 0.08);
+                transform: translateX(5px);
+                border-left-width: 4px;
+            }
+
+            &::before {
+                content: counter(objective-counter);
+                position: absolute;
+                left: 0.75rem;
+                top: 50%;
+                transform: translateY(-50%);
+                background: $accent-orange;
+                color: $window-bg;
+                width: 1.5rem;
+                height: 1.5rem;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 0.8rem;
+                font-weight: 600;
+            }
+
+            strong {
+                color: $accent-orange;
+                font-weight: 600;
+            }
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+        }
+    }
+
+    strong {
+        color: $accent-orange;
+        font-weight: 600;
+    }
+
+    .case-details {
+        background: rgba($accent-blue, 0.05);
+        border: 1px solid rgba($accent-blue, 0.15);
+        border-radius: 8px;
+        padding: 1.5rem;
+        margin: 1.5rem 0;
+
+        p {
+            margin-bottom: 0.75rem;
+            padding-left: 1rem;
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+
+            strong {
+                color: $accent-blue;
+                min-width: 140px;
+                display: inline-block;
+            }
+        }
+    }
+
+    .mission-objectives {
+        background: rgba($accent-orange, 0.05);
+        border: 1px solid rgba($accent-orange, 0.15);
+        border-radius: 8px;
+        padding: 1.5rem;
+        margin: 1.5rem 0;
+    }
+
+    .protocol-box {
+        background: rgba($accent-green, 0.05);
+        border: 1px solid rgba($accent-green, 0.15);
+        border-radius: 8px;
+        padding: 1.5rem;
+        margin: 1.5rem 0;
+
+        p {
+            margin-bottom: 1rem;
+            color: $text-secondary;
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .tool-item {
+            background: rgba($accent-blue, 0.08);
+            border: 1px solid rgba($accent-blue, 0.2);
+            border-radius: 8px;
+            padding: 1rem;
+            transition: all 0.3s ease;
+
+            &:hover {
+                background: rgba($accent-blue, 0.12);
+                border-color: rgba($accent-blue, 0.3);
+                transform: translateY(-2px);
+                box-shadow: 0 4px 12px rgba($accent-blue, 0.15);
+            }
+
+            .tool-header {
+                color: $accent-blue;
+                font-size: 1rem;
+                margin-bottom: 0.5rem;
+                font-weight: 600;
+            }
+
+            .tool-description {
+                color: $text-secondary;
+                font-size: 0.9rem;
+                line-height: 1.4;
+            }
+        }
+
+        .loading-text {
+            text-align: center;
+            color: $text-muted;
+            font-style: italic;
+            margin: 1.5rem 0;
+        }
+
+        .investigation-focus {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background: rgba($accent-orange, 0.08);
+            border: 1px solid rgba($accent-orange, 0.2);
+            border-radius: 6px;
+
+            p {
+                margin: 0;
+                color: $text-primary;
+
+                strong {
+                    color: $accent-orange;
+                }
+            }
+        }
+    }
+
+    .warning-box {
+        background: rgba($accent-red, 0.08);
+        border: 1px solid rgba($accent-red, 0.2);
+        border-radius: 8px;
+        padding: 1.5rem;
+        margin: 1.5rem 0;
+        position: relative;
+
+        p {
+            margin-bottom: 0.5rem;
+            color: $text-primary;
+            font-weight: 500;
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+        }
+    }
+
+    .personnel-note {
+        background: rgba($accent-green, 0.05);
+        border: 1px solid rgba($accent-green, 0.15);
+        border-radius: 8px;
+        padding: 1.5rem;
+        margin: 1.5rem 0;
+
+        p {
+            margin-bottom: 0;
+            color: $text-secondary;
+        }
+    }
+
+    .final-instructions {
+        background: linear-gradient(135deg, rgba($accent-blue, 0.08) 0%, rgba($accent-orange, 0.05) 100%);
+        border: 2px solid rgba($accent-blue, 0.2);
+        border-radius: 12px;
+        padding: 2rem;
+        margin: 2rem 0 0 0;
+        position: relative;
+
+        h4 {
+            margin-top: 0;
+            background: none;
+            border: none;
+            padding: 0;
+            color: $accent-blue;
+        }
+
+        .emphasis {
+            text-align: center;
+            font-size: 1.1rem;
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background: rgba($accent-orange, 0.1);
+            border-radius: 6px;
+            border-left: 4px solid $accent-orange;
+
+            strong {
+                color: $accent-orange;
+                font-size: 1.05em;
+            }
+        }
+    }
+}

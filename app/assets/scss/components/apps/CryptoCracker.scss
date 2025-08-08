@@ -1,0 +1,383 @@
+@use '@/assets/scss/variables' as *;
+@use 'sass:color';
+
+.crypto-cracker {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background: $window-bg;
+    color: $text-primary;
+    font-family: $font-mono;
+    overflow: auto;
+
+    .header {
+        padding: 1rem;
+        border-bottom: 1px solid $border-color;
+        background: $bg-secondary;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        h2 {
+            margin: 0;
+            color: $accent-blue;
+            font-weight: 600;
+        }
+
+        .tool-info {
+            .status {
+                padding: 0.3rem 0.8rem;
+                border-radius: 4px;
+                font-size: 0.9rem;
+                font-weight: 500;
+
+                &.ready {
+                    background: rgba($accent-blue, 0.2);
+                    color: $accent-blue;
+                }
+
+                &.processing {
+                    background: rgba($accent-orange, 0.2);
+                    color: $accent-orange;
+                }
+
+                &.success {
+                    background: rgba($accent-green, 0.2);
+                    color: $accent-green;
+                }
+            }
+        }
+    }
+
+    .main-content {
+        flex: 1;
+        padding: 1rem;
+        overflow-y: auto;
+
+        h3 {
+            color: $text-accent;
+            margin: 0 0 0.8rem 0;
+            font-weight: 600;
+        }
+
+        .cipher-section {
+            margin-bottom: 1.5rem;
+
+            .cipher-types {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+                gap: 0.5rem;
+
+                .cipher-btn {
+                    padding: 0.6rem 1rem;
+                    border: 1px solid $border-color;
+                    background: $bg-secondary;
+                    color: $text-primary;
+                    border-radius: 4px;
+                    cursor: pointer;
+                    transition: all 0.2s ease;
+                    font-family: $font-mono;
+                    font-size: 0.9rem;
+
+                    &:hover {
+                        background: $bg-tertiary;
+                        border-color: $accent-blue;
+                    }
+
+                    &.active {
+                        background: $accent-blue;
+                        border-color: $accent-blue;
+                        color: white;
+                    }
+                }
+            }
+        }
+
+        .input-section {
+            margin-bottom: 1.5rem;
+
+            .encrypted-input {
+                width: 100%;
+                padding: 0.8rem;
+                border: 1px solid $border-color;
+                background: $bg-primary;
+                color: $text-primary;
+                border-radius: 4px;
+                font-family: $font-mono;
+                font-size: 0.9rem;
+                resize: vertical;
+
+                &:focus {
+                    outline: none;
+                    border-color: $accent-blue;
+                }
+
+                &::placeholder {
+                    color: $text-muted;
+                }
+            }
+
+            .key-input {
+                margin-top: 1rem;
+
+                label {
+                    display: block;
+                    margin-bottom: 0.5rem;
+                    color: $text-secondary;
+                    font-weight: 500;
+                }
+
+                .key-field {
+                    width: 100%;
+                    padding: 0.6rem;
+                    border: 1px solid $border-color;
+                    background: $bg-primary;
+                    color: $text-primary;
+                    border-radius: 4px;
+                    font-family: $font-mono;
+
+                    &:focus {
+                        outline: none;
+                        border-color: $accent-blue;
+                    }
+
+                    &::placeholder {
+                        color: $text-muted;
+                    }
+                }
+            }
+        }
+
+        .action-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 0.8rem;
+            margin-bottom: 1.5rem;
+
+            button {
+                padding: 0.7rem 1rem;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                font-family: $font-mono;
+                font-weight: 500;
+                transition: all 0.2s ease;
+
+                &:disabled {
+                    opacity: 0.5;
+                    cursor: not-allowed;
+                }
+
+                &.primary {
+                    background: $accent-blue;
+                    color: white;
+
+                    &:hover:not(:disabled) {
+                        background: color.adjust($accent-blue, $lightness: 10%);
+                    }
+                }
+
+                &.secondary {
+                    background: $accent-purple;
+                    color: white;
+
+                    &:hover:not(:disabled) {
+                        background: color.adjust($accent-purple, $lightness: 10%);
+                    }
+                }
+
+                &.warning {
+                    background: $accent-orange;
+                    color: white;
+
+                    &:hover:not(:disabled) {
+                        background: color.adjust($accent-orange, $lightness: 10%);
+                    }
+                }
+
+                &.clear-btn {
+                    background: $bg-secondary;
+                    color: $text-primary;
+                    border: 1px solid $border-color;
+
+                    &:hover {
+                        background: $bg-tertiary;
+                    }
+                }
+            }
+        }
+
+        .results-section {
+            border: 1px solid $border-color;
+            border-radius: 6px;
+            padding: 1rem;
+            background: $bg-primary;
+            margin-bottom: 1rem;
+
+            .decrypted-result {
+                margin-bottom: 1.5rem;
+
+                h4 {
+                    color: $accent-green;
+                    margin: 0 0 0.8rem 0;
+                }
+
+                .result-text {
+                    background: $bg-secondary;
+                    padding: 1rem;
+                    border-radius: 4px;
+                    border-left: 4px solid $accent-green;
+                    font-family: $font-mono;
+                    font-size: 1rem;
+                    line-height: 1.4;
+                    word-break: break-word;
+                }
+
+                .result-metadata {
+                    margin-top: 0.8rem;
+                    display: flex;
+                    gap: 1rem;
+                    font-size: 0.85rem;
+                    color: $text-secondary;
+
+                    span {
+                        background: $bg-secondary;
+                        padding: 0.3rem 0.6rem;
+                        border-radius: 3px;
+                    }
+                }
+            }
+
+            .analysis-result {
+                margin-bottom: 1.5rem;
+
+                h4 {
+                    color: $accent-purple;
+                    margin: 0 0 0.8rem 0;
+                }
+
+                .frequency-chart {
+                    .freq-bar {
+                        display: flex;
+                        align-items: center;
+                        margin-bottom: 0.5rem;
+                        gap: 0.8rem;
+
+                        .char {
+                            width: 2rem;
+                            font-weight: bold;
+                            color: $text-accent;
+                        }
+
+                        .bar {
+                            flex: 1;
+                            height: 1.2rem;
+                            background: $bg-secondary;
+                            border-radius: 2px;
+                            overflow: hidden;
+
+                            .fill {
+                                height: 100%;
+                                background: linear-gradient(to right, $accent-purple, $accent-blue);
+                                transition: width 0.3s ease;
+                            }
+                        }
+
+                        .percentage {
+                            width: 3rem;
+                            text-align: right;
+                            font-size: 0.85rem;
+                            color: $text-secondary;
+                        }
+                    }
+                }
+            }
+
+            .brute-results {
+                h4 {
+                    color: $accent-orange;
+                    margin: 0 0 0.8rem 0;
+                }
+
+                .brute-list {
+                    max-height: 300px;
+                    overflow-y: auto;
+
+                    .brute-item {
+                        display: grid;
+                        grid-template-columns: auto 1fr auto;
+                        gap: 1rem;
+                        padding: 0.6rem;
+                        background: $bg-secondary;
+                        border-radius: 4px;
+                        margin-bottom: 0.5rem;
+                        cursor: pointer;
+                        transition: background 0.2s ease;
+                        font-size: 0.9rem;
+
+                        &:hover {
+                            background: $bg-tertiary;
+                        }
+
+                        .key {
+                            color: $accent-orange;
+                            font-weight: 500;
+                        }
+
+                        .text {
+                            color: $text-primary;
+                            font-family: $font-mono;
+                        }
+
+                        .score {
+                            color: $text-secondary;
+                            font-size: 0.8rem;
+                        }
+                    }
+                }
+            }
+        }
+
+        .evidence-section {
+            text-align: center;
+
+            .mark-evidence-btn {
+                padding: 0.5rem 1rem;
+                border-radius: 4px;
+                border: 1px solid $accent-blue;
+                background: transparent;
+                color: $accent-blue;
+                cursor: pointer;
+                transition: all 0.2s ease;
+                font-size: 0.9rem;
+                font-family: $font-mono;
+
+                &:hover {
+                    background: rgba($accent-blue, 0.1);
+                }
+
+                &.marked {
+                    background: $accent-blue;
+                    color: white;
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: $mobile) {
+    .crypto-cracker {
+        .main-content {
+            .action-section {
+                grid-template-columns: 1fr;
+            }
+
+            .results-section {
+                .result-metadata {
+                    flex-direction: column;
+                    gap: 0.5rem;
+                }
+            }
+        }
+    }
+}

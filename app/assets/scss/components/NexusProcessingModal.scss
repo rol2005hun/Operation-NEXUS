@@ -1,0 +1,442 @@
+@use '@/assets/scss/variables' as *;
+@use 'sass:color';
+
+.nexus-processing-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.95);
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+    animation: fadeIn 0.3s ease-out;
+}
+
+.nexus-processing-modal {
+    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+    border: 2px solid $accent-blue;
+    border-radius: 12px;
+    padding: 2rem;
+    width: 90%;
+    max-width: 600px;
+    text-align: center;
+    box-shadow: 0 20px 40px rgba(0, 122, 204, 0.3);
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 2px;
+        background: linear-gradient(90deg, transparent, $accent-blue, transparent);
+        animation: scanning 2s infinite;
+    }
+
+    .processing-content {
+        .nexus-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid rgba(0, 122, 204, 0.3);
+            padding-bottom: 1rem;
+
+            .nexus-logo {
+                font-size: 3rem;
+                margin-bottom: 0.5rem;
+                filter: drop-shadow(0 0 10px rgba(0, 122, 204, 0.5));
+            }
+
+            h2 {
+                color: $text-primary;
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 1.5rem;
+                font-weight: 700;
+                letter-spacing: 2px;
+                margin: 0 0 0.5rem 0;
+                text-shadow: 0 0 10px rgba(0, 122, 204, 0.3);
+            }
+
+            .system-status {
+                color: $text-secondary;
+                font-size: 0.9rem;
+                font-weight: 500;
+                animation: pulse 2s infinite;
+            }
+        }
+
+        .processing-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 2rem;
+
+            .processing-section {
+                background: rgba(0, 0, 0, 0.4);
+                border: 1px solid #333;
+                border-radius: 8px;
+                padding: 1rem;
+
+                .section-header {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    margin-bottom: 0.5rem;
+
+                    .section-icon {
+                        font-size: 1.2rem;
+                        margin-right: 0.5rem;
+                    }
+
+                    .section-title {
+                        color: $text-primary;
+                        font-family: 'JetBrains Mono', monospace;
+                        font-weight: 600;
+                        font-size: 0.9rem;
+                        letter-spacing: 1px;
+                        flex-grow: 1;
+                        text-align: left;
+                        margin-left: 0.5rem;
+                    }
+
+                    .section-status {
+                        color: #666;
+                        font-family: 'JetBrains Mono', monospace;
+                        font-size: 0.8rem;
+                        font-weight: 500;
+                        text-transform: uppercase;
+                        letter-spacing: 1px;
+                        min-width: 100px;
+                        text-align: right;
+
+                        &.active {
+                            color: $accent-blue;
+                            animation: pulse 1.5s infinite;
+                        }
+
+                        &.complete {
+                            color: #4caf50;
+                        }
+                    }
+                }
+
+                .progress-bar {
+                    height: 4px;
+                    background: rgba(0, 0, 0, 0.5);
+                    border-radius: 2px;
+                    overflow: hidden;
+
+                    .progress-fill {
+                        height: 100%;
+                        background: linear-gradient(90deg, $accent-blue, #00d4ff);
+                        transition: width 0.8s ease;
+                        position: relative;
+
+                        &::after {
+                            content: '';
+                            position: absolute;
+                            top: 0;
+                            left: -100%;
+                            width: 100%;
+                            height: 100%;
+                            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+                            animation: shimmer 1.5s infinite;
+                        }
+                    }
+                }
+            }
+        }
+
+        .processing-info {
+            text-align: center;
+
+            .processing-text {
+                color: $text-secondary;
+                font-size: 0.9rem;
+                margin-bottom: 1rem;
+                min-height: 1.2rem;
+            }
+
+            .processing-dots {
+                display: flex;
+                justify-content: center;
+                gap: 0.3rem;
+
+                .dot {
+                    width: 8px;
+                    height: 8px;
+                    border-radius: 50%;
+                    background: rgba(0, 122, 204, 0.3);
+                    transition: all 0.3s ease;
+
+                    &.active {
+                        background: $accent-blue;
+                        box-shadow: 0 0 10px rgba(0, 122, 204, 0.8);
+                        transform: scale(1.2);
+                    }
+                }
+            }
+
+            .processing-error {
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+                background: rgba(244, 67, 54, 0.1);
+                border: 1px solid rgba(244, 67, 54, 0.3);
+                border-radius: 8px;
+                padding: 1.5rem;
+                margin-top: 1rem;
+
+                .error-icon {
+                    font-size: 2rem;
+                    animation: shake 0.5s infinite;
+                }
+
+                .error-message {
+                    flex: 1;
+
+                    h4 {
+                        margin: 0 0 0.5rem 0;
+                        color: #f44336;
+                        font-size: 1rem;
+                        font-weight: 600;
+                    }
+
+                    p {
+                        margin: 0 0 1rem 0;
+                        color: $text-secondary;
+                        font-size: 0.9rem;
+                    }
+
+                    .error-actions {
+                        display: flex;
+                        gap: 0.5rem;
+                        flex-wrap: wrap;
+                        justify-content: center;
+                        align-items: center;
+
+                        button {
+                            padding: 0.5rem 1rem;
+                            border: none;
+                            border-radius: 4px;
+                            font-size: 0.8rem;
+                            font-weight: 500;
+                            cursor: pointer;
+                            transition: all 0.2s ease;
+
+                            &.retry-btn {
+                                background: rgba(255, 255, 255, 0.1);
+                                color: $text-primary;
+                                border: 1px solid rgba(255, 255, 255, 0.2);
+
+                                &:hover {
+                                    background: rgba(255, 255, 255, 0.15);
+                                    border-color: rgba(255, 255, 255, 0.3);
+                                    transform: translateY(-1px);
+                                }
+                            }
+
+                            &.cancel-btn {
+                                background: $accent-blue;
+                                color: white;
+
+                                &:hover {
+                                    background: color.adjust($accent-blue, $lightness: 10%);
+                                    transform: translateY(-1px);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            .processing-success {
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+                background: rgba(76, 175, 80, 0.1);
+                border: 1px solid rgba(76, 175, 80, 0.3);
+                border-radius: 8px;
+                padding: 1.5rem;
+                margin-top: 1rem;
+
+                .success-icon {
+                    font-size: 2rem;
+                    animation: bounce 1s infinite;
+                }
+
+                .success-message {
+                    flex: 1;
+
+                    h4 {
+                        margin: 0 0 0.5rem 0;
+                        color: #4caf50;
+                        font-size: 1rem;
+                        font-weight: 600;
+                    }
+
+                    p {
+                        margin: 0 0 1rem 0;
+                        color: $text-secondary;
+                        font-size: 0.9rem;
+                    }
+
+                    .success-indicator {
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        gap: 0.5rem;
+
+                        .success-pulse {
+                            width: 8px;
+                            height: 8px;
+                            border-radius: 50%;
+                            background: #4caf50;
+                            animation: pulse 1s infinite;
+                        }
+
+                        .success-text {
+                            color: #4caf50;
+                            font-size: 0.8rem;
+                            font-weight: 500;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    @media (max-width: 768px) {
+        padding: 1.5rem;
+        margin: 1rem;
+        max-width: none;
+
+        .processing-content {
+            .nexus-header {
+                .nexus-logo {
+                    font-size: 2rem;
+                }
+
+                h2 {
+                    font-size: 1.2rem;
+                }
+            }
+
+            .processing-grid {
+                .processing-section {
+                    padding: 0.8rem;
+
+                    .section-header {
+                        flex-direction: column;
+                        align-items: flex-start;
+                        gap: 0.3rem;
+
+                        .section-title {
+                            font-size: 0.8rem;
+                        }
+
+                        .section-status {
+                            align-self: flex-end;
+                        }
+                    }
+                }
+            }
+
+            .processing-info {
+
+                .processing-error,
+                .processing-success {
+                    flex-direction: column;
+                    text-align: center;
+
+                    .error-actions,
+                    .success-indicator {
+                        justify-content: center;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes scanning {
+    0% {
+        left: -100%;
+    }
+
+    100% {
+        left: 100%;
+    }
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+}
+
+@keyframes shimmer {
+    0% {
+        left: -100%;
+    }
+
+    100% {
+        left: 100%;
+    }
+}
+
+@keyframes shake {
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    25% {
+        transform: translateX(-2px);
+    }
+
+    75% {
+        transform: translateX(2px);
+    }
+}
+
+@keyframes bounce {
+
+    0%,
+    20%,
+    50%,
+    80%,
+    100% {
+        transform: translateY(0);
+    }
+
+    40% {
+        transform: translateY(-5px);
+    }
+
+    60% {
+        transform: translateY(-3px);
+    }
+}

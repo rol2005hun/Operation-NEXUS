@@ -1,0 +1,120 @@
+@use '@/assets/scss/variables' as *;
+
+.floating-buttons {
+    position: fixed;
+    z-index: 1000;
+}
+
+.contact-widgets {
+    position: fixed;
+    bottom: 2rem;
+    left: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    z-index: 1000;
+}
+
+.contact-widget {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, rgba(0, 122, 204, 0.8) 0%, rgba(0, 170, 68, 0.6) 100%);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    color: white;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+
+    &:hover {
+        transform: translateY(-3px) scale(1.1);
+        box-shadow: 0 8px 24px rgba(0, 122, 204, 0.3);
+        border-color: rgba(255, 255, 255, 0.3);
+    }
+
+    &.discord {
+        &:hover {
+            background: linear-gradient(135deg, #7289da 0%, #5865f2 100%);
+            box-shadow: 0 8px 24px rgba(114, 137, 218, 0.4);
+        }
+    }
+
+    &.email {
+        &:hover {
+            background: linear-gradient(135deg, #ea4335 0%, #d33b2c 100%);
+            box-shadow: 0 8px 24px rgba(234, 67, 53, 0.4);
+        }
+    }
+
+    svg {
+        width: 24px;
+        height: 24px;
+    }
+}
+
+.donate-widget {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    z-index: 1000;
+}
+
+.donate-button {
+    display: inline-block;
+    background: linear-gradient(45deg, #FFD700, #FFA500);
+    color: #000;
+    text-decoration: none;
+    padding: 12px 20px;
+    border-radius: 25px;
+    font-weight: bold;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    box-shadow:
+        0 4px 15px rgba(255, 215, 0, 0.3),
+        0 0 20px rgba(255, 215, 0, 0.1);
+    border: 2px solid rgba(255, 215, 0, 0.5);
+
+    &:hover {
+        transform: translateY(-2px);
+        box-shadow:
+            0 6px 20px rgba(255, 215, 0, 0.4),
+            0 0 30px rgba(255, 215, 0, 0.2);
+        background: linear-gradient(45deg, #FFA500, #FF8C00);
+    }
+
+    &:active {
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 768px) {
+    .contact-widgets {
+        bottom: 1rem;
+        left: 1rem;
+        gap: 0.5rem;
+    }
+
+    .contact-widget {
+        width: 45px;
+        height: 45px;
+
+        svg {
+            width: 20px;
+            height: 20px;
+        }
+    }
+
+    .donate-widget {
+        bottom: 15px;
+        right: 15px;
+    }
+
+    .donate-button {
+        padding: 10px 16px;
+        font-size: 12px;
+    }
+}

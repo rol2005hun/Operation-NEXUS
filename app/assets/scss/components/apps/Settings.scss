@@ -1,0 +1,302 @@
+@use '@/assets/scss/variables' as *;
+
+.app-settings {
+    padding: 20px;
+    height: 100%;
+    overflow-y: auto;
+    background: $window-bg;
+    color: $text-primary;
+    font-family: $font-primary;
+
+    .settings-header {
+        margin-bottom: 32px;
+        padding-bottom: 16px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+
+        h2 {
+            margin: 0 0 6px 0;
+            color: $text-primary;
+            font-size: 20px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        p {
+            margin: 0;
+            color: $text-secondary;
+            font-size: 13px;
+            font-weight: 400;
+        }
+    }
+
+    .settings-content {
+        max-width: 580px;
+        margin: 0 auto;
+    }
+
+    .settings-section {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 10px;
+        padding: 20px;
+        margin-bottom: 20px;
+        backdrop-filter: blur(8px);
+        transition: all 0.3s ease;
+
+        &:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.12);
+        }
+
+        h3 {
+            margin: 0 0 6px 0;
+            color: $accent-blue;
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        >p {
+            margin: 0 0 18px 0;
+            color: $text-secondary;
+            font-size: 13px;
+            line-height: 1.4;
+        }
+    }
+
+    .wallpaper-settings {
+        .current-wallpaper {
+            margin-bottom: 20px;
+
+            h4 {
+                margin: 0 0 10px 0;
+                color: $text-primary;
+                font-size: 15px;
+                font-weight: 500;
+            }
+
+            .wallpaper-preview {
+                width: 100%;
+                height: 100px;
+                border-radius: 8px;
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                background-size: cover;
+                background-position: center;
+                background-repeat: no-repeat;
+                background-color: $bg-secondary;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                position: relative;
+                overflow: hidden;
+                transition: all 0.3s ease;
+
+                &:hover {
+                    border-color: rgba(255, 255, 255, 0.15);
+                }
+
+                .default-label {
+                    background: rgba(0, 0, 0, 0.6);
+                    color: $text-secondary;
+                    padding: 6px 12px;
+                    border-radius: 6px;
+                    font-size: 13px;
+                    backdrop-filter: blur(8px);
+                }
+
+                &::before {
+                    content: '';
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                    background: linear-gradient(45deg,
+                            rgba(0, 122, 204, 0.08) 0%,
+                            transparent 50%,
+                            rgba(0, 170, 68, 0.08) 100%);
+                    z-index: 0;
+                }
+
+                .default-label {
+                    z-index: 1;
+                }
+            }
+        }
+
+        .wallpaper-input {
+            margin-bottom: 16px;
+
+            label {
+                display: block;
+                margin-bottom: 6px;
+                color: $text-primary;
+                font-weight: 500;
+                font-size: 13px;
+            }
+
+            .input-group {
+                display: flex;
+                gap: 10px;
+                margin-bottom: 6px;
+
+                .wallpaper-url-input {
+                    flex: 1;
+                    padding: 10px 14px;
+                    background: rgba(255, 255, 255, 0.06);
+                    border: 1px solid rgba(255, 255, 255, 0.15);
+                    border-radius: 6px;
+                    color: $text-primary;
+                    font-size: 13px;
+                    font-family: $font-mono;
+                    transition: all 0.3s ease;
+
+                    &:focus {
+                        outline: none;
+                        border-color: $accent-blue;
+                        background: rgba(255, 255, 255, 0.1);
+                        box-shadow: 0 0 0 2px rgba(0, 122, 204, 0.15);
+                    }
+
+                    &::placeholder {
+                        color: $text-muted;
+                    }
+                }
+
+                .apply-btn {
+                    padding: 10px 20px;
+                    background: linear-gradient(135deg, $accent-blue 0%, #0066cc 100%);
+                    border: none;
+                    border-radius: 6px;
+                    color: white;
+                    font-weight: 500;
+                    font-size: 13px;
+                    cursor: pointer;
+                    transition: all 0.3s ease;
+                    white-space: nowrap;
+
+                    &:hover:not(:disabled) {
+                        background: linear-gradient(135deg, #0088ff 0%, #0066cc 100%);
+                        transform: translateY(-1px);
+                        box-shadow: 0 3px 8px rgba(0, 122, 204, 0.3);
+                    }
+
+                    &:disabled {
+                        opacity: 0.5;
+                        cursor: not-allowed;
+                        transform: none;
+                    }
+                }
+            }
+
+            .input-hint {
+                color: $text-muted;
+                font-size: 12px;
+                font-style: italic;
+            }
+        }
+
+        .wallpaper-actions {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 16px;
+
+            button {
+                padding: 8px 16px;
+                border: 1px solid rgba(255, 255, 255, 0.15);
+                border-radius: 6px;
+                background: rgba(255, 255, 255, 0.06);
+                color: $text-primary;
+                font-weight: 500;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                font-size: 13px;
+
+                &:hover:not(:disabled) {
+                    background: rgba(255, 255, 255, 0.12);
+                    border-color: rgba(255, 255, 255, 0.25);
+                    transform: translateY(-1px);
+                }
+
+                &:disabled {
+                    opacity: 0.5;
+                    cursor: not-allowed;
+                    transform: none;
+                }
+
+                &.reset-btn:hover:not(:disabled) {
+                    border-color: $accent-red;
+                    background: rgba(204, 68, 68, 0.15);
+                }
+
+                &.test-btn:hover:not(:disabled) {
+                    border-color: $accent-green;
+                    background: rgba(0, 170, 68, 0.15);
+                }
+            }
+        }
+
+        .error-message {
+            background: rgba(204, 68, 68, 0.15);
+            border: 1px solid rgba(204, 68, 68, 0.3);
+            border-radius: 6px;
+            padding: 10px 14px;
+            color: #ffaaaa;
+            font-size: 13px;
+            margin-top: 10px;
+        }
+
+        .success-message {
+            background: rgba(0, 170, 68, 0.15);
+            border: 1px solid rgba(0, 170, 68, 0.3);
+            border-radius: 6px;
+            padding: 10px 14px;
+            color: #aaffaa;
+            font-size: 13px;
+            margin-top: 10px;
+        }
+    }
+
+    .coming-soon {
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 12px 0 0 0;
+
+            li {
+                padding: 6px 0;
+                color: $text-muted;
+                font-size: 13px;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+                transition: color 0.3s ease;
+
+                &:last-child {
+                    border-bottom: none;
+                }
+
+                &:hover {
+                    color: $text-secondary;
+                }
+            }
+        }
+    }
+}
+
+.app-settings::-webkit-scrollbar {
+    width: 8px;
+}
+
+.app-settings::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 4px;
+}
+
+.app-settings::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+
+    &:hover {
+        background: rgba(255, 255, 255, 0.3);
+    }
+}

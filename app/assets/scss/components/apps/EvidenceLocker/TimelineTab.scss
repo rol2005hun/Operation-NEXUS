@@ -1,0 +1,113 @@
+@use '@/assets/scss/variables' as *;
+
+.timeline-tab {
+    padding: 1rem;
+
+    .timeline-header {
+        margin-bottom: 1.5rem;
+
+        h3 {
+            margin: 0 0 0.5rem 0;
+            color: $text-primary;
+        }
+
+        p {
+            margin: 0;
+            color: $text-secondary;
+        }
+    }
+
+    .timeline {
+        position: relative;
+
+        &::before {
+            content: '';
+            position: absolute;
+            left: 20px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: $accent-blue;
+            opacity: 0.3;
+        }
+
+        .timeline-event {
+            position: relative;
+            margin-bottom: 2rem;
+            padding-left: 3rem;
+
+            .timeline-marker {
+                position: absolute;
+                left: 12px;
+                top: 0.5rem;
+                width: 16px;
+                height: 16px;
+                background: $accent-blue;
+                border-radius: 50%;
+                border: 3px solid $bg-primary;
+                box-shadow: 0 0 0 3px rgba(0, 122, 204, 0.2);
+            }
+
+            .timeline-content-item {
+                background: $bg-secondary;
+                border-radius: 8px;
+                padding: 1rem;
+                border: 1px solid #444;
+
+                .timeline-header {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: flex-start;
+                    margin-bottom: 0.5rem;
+
+                    h4 {
+                        margin: 0;
+                        color: $text-primary;
+                        font-size: 1rem;
+                    }
+
+                    .timeline-time {
+                        color: $text-secondary;
+                        font-size: 0.8rem;
+                        white-space: nowrap;
+                        margin-left: 1rem;
+                    }
+                }
+
+                .timeline-description {
+                    color: $text-primary;
+                    margin: 0 0 1rem 0;
+                    line-height: 1.4;
+                }
+
+                .timeline-meta {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 0.25rem;
+                    font-size: 0.8rem;
+
+                    .timeline-label {
+                        color: $accent-blue;
+                        font-weight: 600;
+                        margin-right: 0.5rem;
+                    }
+
+                    .timeline-participants,
+                    .timeline-location {
+                        color: $text-secondary;
+                    }
+                }
+            }
+        }
+
+        .timeline-empty {
+            text-align: center;
+            padding: 3rem 1rem;
+            color: $text-secondary;
+
+            p {
+                margin: 0.5rem 0;
+            }
+        }
+    }
+}

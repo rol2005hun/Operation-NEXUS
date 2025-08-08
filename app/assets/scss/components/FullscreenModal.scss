@@ -1,0 +1,244 @@
+.fullscreen-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.9) 0%, rgba(0, 122, 204, 0.1) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+    backdrop-filter: blur(8px);
+    animation: modalFadeIn 0.4s ease-out;
+}
+
+@keyframes modalFadeIn {
+    from {
+        opacity: 0;
+        backdrop-filter: blur(0px);
+    }
+
+    to {
+        opacity: 1;
+        backdrop-filter: blur(8px);
+    }
+}
+
+.modal-content {
+    background: linear-gradient(145deg, #1a1a1a 0%, #2d2d2d 100%);
+    border: 2px solid #007acc;
+    border-radius: 16px;
+    max-width: 520px;
+    width: 90%;
+    box-shadow:
+        0 25px 80px rgba(0, 122, 204, 0.4),
+        0 0 0 1px rgba(255, 255, 255, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    animation: modalSlideIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.modal-content::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #007acc, transparent);
+    opacity: 0.6;
+}
+
+@keyframes modalSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-40px) scale(0.9);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px 28px 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    background: linear-gradient(135deg, rgba(0, 122, 204, 0.1) 0%, transparent 100%);
+
+    h2 {
+        margin: 0;
+        background: linear-gradient(135deg, #007acc 0%, #4fc3f7 100%);
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-size: 22px;
+        font-weight: 700;
+        text-shadow: 0 0 20px rgba(0, 122, 204, 0.3);
+    }
+
+    .close-btn {
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 8px;
+        color: #888;
+        font-size: 20px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        width: 32px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &:hover {
+            color: #007acc;
+            background: rgba(0, 122, 204, 0.2);
+            border-color: #007acc;
+            transform: scale(1.1);
+        }
+    }
+}
+
+.modal-body {
+    padding: 28px;
+
+    .recommendation-text {
+        margin-bottom: 28px;
+
+        p {
+            margin: 0 0 16px;
+            color: #e8e8e8;
+            line-height: 1.6;
+            font-size: 15px;
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+
+            &:first-child {
+                font-weight: 500;
+            }
+        }
+    }
+
+    .controls-info {
+        margin-bottom: 28px;
+        padding: 20px;
+        background: linear-gradient(135deg, rgba(0, 122, 204, 0.1) 0%, rgba(42, 42, 42, 0.8) 100%);
+        border-radius: 12px;
+        border: 1px solid rgba(0, 122, 204, 0.3);
+        position: relative;
+
+        &::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(180deg, #007acc 0%, #4fc3f7 100%);
+            border-radius: 0 2px 2px 0;
+        }
+
+        .control-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 12px;
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+
+            kbd {
+                background: linear-gradient(145deg, #404040 0%, #2a2a2a 100%);
+                border: 1px solid #555;
+                border-radius: 6px;
+                padding: 6px 12px;
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 13px;
+                color: #007acc;
+                min-width: 45px;
+                text-align: center;
+                box-shadow:
+                    0 2px 4px rgba(0, 0, 0, 0.3),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+                font-weight: 600;
+            }
+
+            span {
+                color: #d0d0d0;
+                font-size: 14px;
+                font-weight: 500;
+            }
+        }
+    }
+
+    .modal-actions {
+        display: flex;
+        gap: 16px;
+        justify-content: flex-end;
+
+        button {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+
+            &::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: -100%;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+                transition: left 0.6s;
+            }
+
+            &:hover::before {
+                left: 100%;
+            }
+
+            &.btn-fullscreen {
+                background: linear-gradient(135deg, #007acc 0%, #0056b3 100%);
+                color: white;
+                box-shadow: 0 4px 15px rgba(0, 122, 204, 0.4);
+
+                &:hover {
+                    background: linear-gradient(135deg, #0056b3 0%, #007acc 100%);
+                    transform: translateY(-2px);
+                    box-shadow: 0 6px 20px rgba(0, 122, 204, 0.6);
+                }
+
+                &:active {
+                    transform: translateY(0);
+                }
+            }
+
+            &.btn-dont-show {
+                background: linear-gradient(135deg, #404040 0%, #2a2a2a 100%);
+                color: #ccc;
+                border: 1px solid rgba(255, 255, 255, 0.1);
+
+                &:hover {
+                    background: linear-gradient(135deg, #505050 0%, #3a3a3a 100%);
+                    color: white;
+                    border-color: rgba(255, 255, 255, 0.2);
+                    transform: translateY(-1px);
+                }
+            }
+        }
+    }
+}

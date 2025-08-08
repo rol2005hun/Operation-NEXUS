@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEXUS Logo Generator</title>
+    <script src="https://cdn.jsdelivr.net/npm/gif.js@0.2.0/dist/gif.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background: #1a1a1a;
+            color: white;
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .logo-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .logo-canvas {
+            border: 2px solid #007acc;
+            border-radius: 8px;
+            background: white;
+        }
+
+        .controls {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+        }
+
+        label {
+            font-size: 12px;
+            color: #ccc;
+        }
+
+        input,
+        select {
+            padding: 5px 10px;
+            background: #2a2a2a;
+            border: 1px solid #007acc;
+            color: white;
+            border-radius: 4px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background: #007acc;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        button:hover {
+            background: #0066aa;
+        }
+
+        .size-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .size-btn {
+            padding: 5px 10px;
+            font-size: 12px;
+        }
+
+        .download-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>NEXUS Diamond Logo Generator</h1>
+    <div class="logo-container">
+        <canvas id="logoCanvas" class="logo-canvas" width="400" height="400"></canvas>
+        <div class="controls">
+            <div class="control-group">
+                <label>Logo Size</label>
+                <div class="size-buttons">
+                    <button class="size-btn" onclick="setSize(200, 200)">200x200</button>
+                    <button class="size-btn" onclick="setSize(400, 400)">400x400</button>
+                    <button class="size-btn" onclick="setSize(800, 800)">800x800</button>
+                    <button class="size-btn" onclick="setSize(1024, 1024)">1024x1024</button>
+                </div>
+            </div>
+            <div class="control-group">
+                <label>Background</label>
+                <select id="backgroundType" onchange="drawLogo()">
+                    <option value="white">White</option>
+                    <option value="dark">Dark</option>
+                    <option value="transparent">Transparent</option>
+                    <option value="gradient">Blue Gradient</option>
+                </select>
+            </div>
+            <div class="control-group">
+                <label>Style</label>
+                <select id="logoStyle" onchange="drawLogo()">
+                    <option value="modern">Modern</option>
+                    <option value="minimal">Minimal</option>
+                    <option value="detailed">Detailed</option>
+                </select>
+            </div>
+            <div class="control-group">
+                <label>Icon Size</label>
+                <input type="range" id="iconScale" min="0.3" max="2.5" step="0.1" value="1" onchange="drawLogo()">
+            </div>
+            <div class="control-group">
+                <label>Animation Type</label>
+                <select id="animationType">
+                    <option value="glow">Glow Pulse</option>
+                    <option value="pulse">Size Pulse</option>
+                    <option value="rotate">Rotation</option>
+                </select>
+            </div>
+        </div>
+        <div class="download-section">
+            <button onclick="downloadLogo('png')">Download PNG</button>
+            <button onclick="downloadLogo('svg')">Download SVG</button>
+            <button onclick="downloadGif()">Download Animated GIF</button>
+        </div>
+    </div>
+    <script>
+        const canvas = document.getElementById('logoCanvas');
+        const ctx = canvas.getContext('2d');
+        let animationFrame = 0;
+
+        function setSize(width, height) {
+            canvas.width = width;
+            canvas.height = height;
+            drawLogo();
+        }
+
+        function drawLogo() {
+            const bg = document.getElementById('backgroundType').value;
+            const style = document.getElementById('logoStyle').value;
+            const scale = parseFloat(document.getElementById('iconScale').value);
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawBackground(bg);
+
+            const centerX = canvas.width / 2;
+            const centerY = canvas.height / 2;
+            const baseSize = Math.min(canvas.width, canvas.height) * 0.6 * scale;
+
+            drawDiamondLogo(centerX, centerY, baseSize, style);
+        }
+
+        function drawBackground(type) {
+            if (type === 'white') {
+                ctx.fillStyle = 'white';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+            } else if (type === 'dark') {
+                ctx.fillStyle = '#1a1a1a';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+            } else if (type === 'gradient') {
+                const gradient = ctx.createRadialGradient(
+                    canvas.width / 2, canvas.height / 2, 0,
+                    canvas.width / 2, canvas.height / 2, canvas.width / 2
+                );
+
+                gradient.addColorStop(0, '#007acc');
+                gradient.addColorStop(1, '#004080');
+                ctx.fillStyle = gradient;
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+            }
+        }
+
+        function drawDiamondLogo(centerX, centerY, size, style, glowIntensity = 1) {
+            const bg = document.getElementById('backgroundType').value;
+            const isDark = bg === 'dark' || bg === 'gradient' || bg === 'transparent';
+
+            if (style === 'minimal') {
+                drawMinimalDiamond(centerX, centerY, size, isDark);
+            } else if (style === 'detailed') {
+                drawDetailedDiamond(centerX, centerY, size, isDark, glowIntensity);
+            } else {
+                drawModernDiamond(centerX, centerY, size, isDark, glowIntensity);
+            }
+        }
+
+        function drawMinimalDiamond(centerX, centerY, size, isDark) {
+            const diamondSize = size * 0.4;
+            const color = isDark ? '#007acc' : '#003d66';
+
+            ctx.fillStyle = color;
+            ctx.beginPath();
+            ctx.moveTo(centerX, centerY - diamondSize);
+            ctx.lineTo(centerX + diamondSize, centerY);
+            ctx.lineTo(centerX, centerY + diamondSize);
+            ctx.lineTo(centerX - diamondSize, centerY);
+            ctx.closePath();
+            ctx.fill();
+        }
+
+        function drawModernDiamond(centerX, centerY, size, isDark, glowIntensity = 1) {
+            const diamondSize = size * 0.3;
+            const primaryColor = '#007acc';
+            const glowColor = `rgba(0, 122, 204, ${0.6 * glowIntensity})`;
+
+            for (let i = 5; i >= 1; i--) {
+                ctx.shadowColor = glowColor;
+                ctx.shadowBlur = 30 * i * glowIntensity;
+                ctx.shadowOffsetX = 0;
+                ctx.shadowOffsetY = 0;
+                ctx.fillStyle = `rgba(0, 122, 204, ${0.03 * glowIntensity})`;
+                ctx.beginPath();
+                ctx.moveTo(centerX, centerY - diamondSize * (1 + i * 0.05));
+                ctx.lineTo(centerX + diamondSize * (1 + i * 0.05), centerY);
+                ctx.lineTo(centerX, centerY + diamondSize * (1 + i * 0.05));
+                ctx.lineTo(centerX - diamondSize * (1 + i * 0.05), centerY);
+                ctx.closePath();
+                ctx.fill();
+            }
+
+            ctx.shadowColor = primaryColor;
+            ctx.shadowBlur = 25 * glowIntensity;
+            ctx.shadowOffsetX = 0;
+            ctx.shadowOffsetY = 0;
+            ctx.fillStyle = primaryColor;
+            ctx.beginPath();
+            ctx.moveTo(centerX, centerY - diamondSize);
+            ctx.lineTo(centerX + diamondSize, centerY);
+            ctx.lineTo(centerX, centerY + diamondSize);
+            ctx.lineTo(centerX - diamondSize, centerY);
+            ctx.closePath();
+            ctx.fill();
+            ctx.shadowBlur = 0;
+
+            const highlightSize = diamondSize * 0.6;
+            const gradient = ctx.createLinearGradient(
+                centerX - highlightSize, centerY - highlightSize,
+                centerX + highlightSize, centerY + highlightSize
+            );
+
+            gradient.addColorStop(0, 'rgba(255, 255, 255, 0.4)');
+            gradient.addColorStop(0.5, 'rgba(255, 255, 255, 0.1)');
+            gradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
+
+            ctx.fillStyle = gradient;
+            ctx.beginPath();
+            ctx.moveTo(centerX, centerY - highlightSize);
+            ctx.lineTo(centerX + highlightSize, centerY);
+            ctx.lineTo(centerX, centerY + highlightSize);
+            ctx.lineTo(centerX - highlightSize, centerY);
+            ctx.closePath();
+            ctx.fill();
+
+            drawBlueSparkles(centerX, centerY, size * 0.6, glowIntensity);
+        }
+
+        function drawDetailedDiamond(centerX, centerY, size, isDark, glowIntensity = 1) {
+            const diamondSize = size * 0.25;
+            const primaryColor = '#007acc';
+            const glowColor = `rgba(0, 122, 204, ${0.5 * glowIntensity})`;
+
+            for (let i = 8; i >= 1; i--) {
+                ctx.shadowColor = glowColor;
+                ctx.shadowBlur = 40 * i * glowIntensity;
+                ctx.shadowOffsetX = 0;
+                ctx.shadowOffsetY = 0;
+                ctx.fillStyle = `rgba(0, 122, 204, ${0.02 * glowIntensity})`;
+                ctx.beginPath();
+                ctx.moveTo(centerX, centerY - diamondSize * (1 + i * 0.08));
+                ctx.lineTo(centerX + diamondSize * (1 + i * 0.08), centerY);
+                ctx.lineTo(centerX, centerY + diamondSize * (1 + i * 0.08));
+                ctx.lineTo(centerX - diamondSize * (1 + i * 0.08), centerY);
+                ctx.closePath();
+                ctx.fill();
+            }
+            ctx.shadowBlur = 0;
+
+            drawModernDiamond(centerX, centerY, size * 0.8, isDark, glowIntensity);
+
+            ctx.strokeStyle = primaryColor;
+            ctx.lineWidth = 3;
+            ctx.shadowColor = primaryColor;
+            ctx.shadowBlur = 20 * glowIntensity;
+            ctx.setLineDash([]);
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, size * 0.45, 0, Math.PI * 2);
+            ctx.stroke();
+            ctx.shadowBlur = 0;
+
+            drawBlueCornerAccents(centerX, centerY, size * 0.5, primaryColor, glowIntensity);
+            drawBlueSparkles(centerX, centerY, size * 0.8, glowIntensity * 1.5);
+        }
+        function drawBlueSparkles(centerX, centerY, radius, intensity = 1) {
+            const sparkleCount = 6;
+            const sparkleColor = '#ffffff';
+            const glowColor = '#007acc';
+
+            for (let i = 0; i < sparkleCount; i++) {
+                const angle = (i / sparkleCount) * Math.PI * 2;
+                const distance = radius * (0.8 + Math.random() * 0.4);
+                const sparkleX = centerX + Math.cos(angle) * distance;
+                const sparkleY = centerY + Math.sin(angle) * distance;
+                const sparkleSize = (2 + Math.random() * 3) * intensity;
+
+                ctx.shadowColor = glowColor;
+                ctx.shadowBlur = 12 * intensity;
+                ctx.strokeStyle = sparkleColor;
+                ctx.fillStyle = sparkleColor;
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(sparkleX - sparkleSize, sparkleY);
+                ctx.lineTo(sparkleX + sparkleSize, sparkleY);
+                ctx.moveTo(sparkleX, sparkleY - sparkleSize);
+                ctx.lineTo(sparkleX, sparkleY + sparkleSize);
+                ctx.stroke();
+                ctx.beginPath();
+                ctx.arc(sparkleX, sparkleY, sparkleSize * 0.3, 0, Math.PI * 2);
+                ctx.fill();
+            }
+            ctx.shadowBlur = 0;
+        }
+        function drawBlueCornerAccents(x, y, radius, color, glowIntensity = 1) {
+            const positions = [
+                [-radius, -radius], [radius, -radius],
+                [-radius, radius], [radius, radius]
+            ];
+
+            positions.forEach(([dx, dy]) => {
+                const cornerX = x + dx;
+                const cornerY = y + dy;
+
+                ctx.strokeStyle = color;
+                ctx.lineWidth = 2;
+                ctx.shadowColor = color;
+                ctx.shadowBlur = 8 * glowIntensity;
+                ctx.beginPath();
+                ctx.moveTo(cornerX, cornerY + dy * 0.2);
+                ctx.lineTo(cornerX, cornerY);
+                ctx.lineTo(cornerX + dx * 0.2, cornerY);
+                ctx.stroke();
+            });
+            ctx.shadowBlur = 0;
+        }
+
+        function drawRGBSparkles(centerX, centerY, radius, intensity = 1) {
+            drawBlueSparkles(centerX, centerY, radius, intensity);
+        }
+
+        function drawRGBCornerAccents(x, y, radius, color, glowIntensity = 1) {
+            drawBlueCornerAccents(x, y, radius, color, glowIntensity);
+        }
+
+        function drawSparkles(centerX, centerY, radius, intensity = 1) {
+            drawBlueSparkles(centerX, centerY, radius, intensity);
+        }
+
+        function drawCornerAccents(x, y, radius, color, glowIntensity = 1) {
+            drawBlueCornerAccents(x, y, radius, color, glowIntensity);
+        }
+
+        function downloadLogo(format) {
+            if (format === 'png') {
+                const link = document.createElement('a');
+
+                link.download = `nexus-diamond-logo-${canvas.width}x${canvas.height}.png`;
+                link.href = canvas.toDataURL();
+                link.click();
+            } else if (format === 'svg') {
+                downloadSVGLogo();
+            }
+        }
+
+        function downloadSVGLogo() {
+            const size = canvas.width;
+            const bg = document.getElementById('backgroundType').value;
+            const style = document.getElementById('logoStyle').value;
+            const isDark = bg === 'dark' || bg === 'gradient';
+            const primaryColor = '#007acc';
+            const diamondSize = size * 0.18;
+            let svgContent = `<svg width="${size}" height="${size}" xmlns="http://www.w3.org/2000/svg">`;
+
+            if (bg === 'white') {
+                svgContent += `<rect width="${size}" height="${size}" fill="white"/>`;
+            } else if (bg === 'dark') {
+                svgContent += `<rect width="${size}" height="${size}" fill="#1a1a1a"/>`;
+            } else if (bg === 'gradient') {
+                svgContent += `
+                    <defs>
+                        <radialGradient id="bg" cx="50%" cy="50%" r="50%">
+                            <stop offset="0%" style="stop-color:#007acc"/>
+                            <stop offset="100%" style="stop-color:#004080"/>
+                        </radialGradient>
+                        <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+                            <feGaussianBlur stdDeviation="8" result="coloredBlur"/>
+                            <feMerge> 
+                                <feMergeNode in="coloredBlur"/>
+                                <feMergeNode in="SourceGraphic"/>
+                            </feMerge>
+                        </filter>
+                        <filter id="strongGlow" x="-100%" y="-100%" width="300%" height="300%">
+                            <feGaussianBlur stdDeviation="15" result="coloredBlur"/>
+                            <feMerge> 
+                                <feMergeNode in="coloredBlur"/>
+                                <feMergeNode in="SourceGraphic"/>
+                            </feMerge>
+                        </filter>
+                    </defs>
+                    <rect width="${size}" height="${size}" fill="url(#bg)"/>`;
+            } else {
+                svgContent += `
+                    <defs>
+                        <filter id="blueGlow" x="-100%" y="-100%" width="300%" height="300%">
+                            <feGaussianBlur stdDeviation="8" result="coloredBlur"/>
+                            <feMerge> 
+                                <feMergeNode in="coloredBlur"/>
+                                <feMergeNode in="SourceGraphic"/>
+                            </feMerge>
+                        </filter>
+                        <filter id="strongBlueGlow" x="-150%" y="-150%" width="400%" height="400%">
+                            <feGaussianBlur stdDeviation="15" result="coloredBlur"/>
+                            <feMerge> 
+                                <feMergeNode in="coloredBlur"/>
+                                <feMergeNode in="SourceGraphic"/>
+                            </feMerge>
+                        </filter>
+                    </defs>`;
+            }
+            const centerX = size / 2;
+            const centerY = size / 2;
+
+            for (let i = 3; i >= 1; i--) {
+                const glowSize = diamondSize * (1 + i * 0.3);
+
+                svgContent += `
+                    <path d="M ${centerX} ${centerY - glowSize} 
+                             L ${centerX + glowSize} ${centerY} 
+                             L ${centerX} ${centerY + glowSize} 
+                             L ${centerX - glowSize} ${centerY} Z" 
+                          fill="rgba(0, 122, 204, ${0.05 / i})" 
+                          filter="url(#blueGlow)"/>`;
+            }
+
+            svgContent += `
+                <path d="M ${centerX} ${centerY - diamondSize} 
+                         L ${centerX + diamondSize} ${centerY} 
+                         L ${centerX} ${centerY + diamondSize} 
+                         L ${centerX - diamondSize} ${centerY} Z" 
+                      fill="${primaryColor}" 
+                      filter="url(#strongBlueGlow)"/>`;
+            const highlightSize = diamondSize * 0.6;
+
+            svgContent += `
+                <defs>
+                    <linearGradient id="highlight" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" style="stop-color:rgba(255,255,255,0.4);stop-opacity:1" />
+                        <stop offset="50%" style="stop-color:rgba(255,255,255,0.1);stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:rgba(255,255,255,0);stop-opacity:1" />
+                    </linearGradient>
+                </defs>
+                <path d="M ${centerX} ${centerY - highlightSize} 
+                         L ${centerX + highlightSize} ${centerY} 
+                         L ${centerX} ${centerY + highlightSize} 
+                         L ${centerX - highlightSize} ${centerY} Z" 
+                      fill="url(#highlight)"/>`;
+
+            if (style === 'detailed') {
+                svgContent += `<circle cx="${centerX}" cy="${centerY}" r="${size * 0.27}" fill="none" stroke="${primaryColor}" stroke-width="3" filter="url(#blueGlow)"/>`;
+
+                const radius = size * 0.3;
+                const positions = [
+                    [-radius, -radius], [radius, -radius],
+                    [-radius, radius], [radius, radius]
+                ];
+
+                positions.forEach(([dx, dy]) => {
+                    const cornerX = centerX + dx;
+                    const cornerY = centerY + dy;
+
+                    svgContent += `
+                        <path d="M ${cornerX} ${cornerY + dy * 0.2} 
+                                 L ${cornerX} ${cornerY} 
+                                 L ${cornerX + dx * 0.2} ${cornerY}" 
+                              stroke="${primaryColor}" stroke-width="2" fill="none" filter="url(#blueGlow)"/>`;
+                });
+
+                const sparklePositions = [
+                    [centerX + radius * 0.7, centerY - radius * 0.7],
+                    [centerX - radius * 0.7, centerY - radius * 0.7],
+                    [centerX + radius * 0.9, centerY],
+                    [centerX - radius * 0.9, centerY],
+                    [centerX + radius * 0.7, centerY + radius * 0.7],
+                    [centerX - radius * 0.7, centerY + radius * 0.7]
+                ];
+                sparklePositions.forEach(([x, y]) => {
+                    svgContent += `
+                        <g filter="url(#blueGlow)">
+                            <path d="M ${x - 4} ${y} L ${x + 4} ${y} M ${x} ${y - 4} L ${x} ${y + 4}" stroke="white" stroke-width="2"/>
+                            <circle cx="${x}" cy="${y}" r="1" fill="white"/>
+                        </g>`;
+                });
+            }
+            svgContent += `</svg>`;
+            const blob = new Blob([svgContent], { type: 'image/svg+xml' });
+            const link = document.createElement('a');
+
+            link.download = `nexus-diamond-logo-${size}x${size}.svg`;
+            link.href = URL.createObjectURL(blob);
+            link.click();
+        }
+        function downloadGif() {
+            const button = event.target;
+            const originalText = button.textContent;
+            const animationType = document.getElementById('animationType').value;
+            
+            button.textContent = 'Generating frames...';
+            button.disabled = true;
+
+            try {
+                const frames = generateAnimationFrames(60, animationType);
+                
+                button.textContent = 'Creating GIF...';
+                
+                createAnimatedGif(frames, 100).then(blob => {
+                    const link = document.createElement('a');
+                    link.download = `nexus-diamond-logo-animated-${animationType}-${canvas.width}x${canvas.height}.gif`;
+                    link.href = URL.createObjectURL(blob);
+                    link.click();
+                    
+                    button.textContent = originalText;
+                    button.disabled = false;
+                    drawLogo();
+                }).catch(error => {
+                    console.error('Error creating GIF:', error);
+                    button.textContent = 'Error - Try Again';
+                    button.disabled = false;
+                    setTimeout(() => {
+                        button.textContent = originalText;
+                    }, 2000);
+                });
+                
+            } catch (error) {
+                console.error('Error generating frames:', error);
+                button.textContent = 'Error - Try Again';
+                button.disabled = false;
+                setTimeout(() => {
+                    button.textContent = originalText;
+                }, 2000);
+            }
+        }
+
+        function createAnimatedGif(frames, duration = 100) {
+            if (!frames || frames.length === 0) {
+                console.error('No frames provided for GIF creation');
+                return null;
+            }
+
+            const gif = new GIF({
+                workers: 2,
+                quality: 10,
+                width: canvas.width,
+                height: canvas.height,
+                repeat: 0
+            });
+
+            frames.forEach((frameCanvas, index) => {
+                gif.addFrame(frameCanvas, { 
+                    delay: duration,
+                    copy: true
+                });
+            });
+
+            return new Promise((resolve, reject) => {
+                gif.on('finished', function(blob) {
+                    resolve(blob);
+                });
+
+                gif.on('abort', function() {
+                    reject(new Error('GIF creation was aborted'));
+                });
+
+                gif.on('progress', function(p) {
+                    console.log('GIF creation progress:', Math.round(p * 100) + '%');
+                });
+
+                gif.render();
+            });
+        }
+
+        function generateAnimationFrames(frameCount = 60, animationType = 'glow') {
+            const frames = [];
+            const originalCanvas = canvas;
+            
+            for (let i = 0; i < frameCount; i++) {
+                const frameCanvas = document.createElement('canvas');
+                frameCanvas.width = originalCanvas.width;
+                frameCanvas.height = originalCanvas.height;
+                const frameCtx = frameCanvas.getContext('2d');
+                
+                const tempCtx = ctx;
+                window.ctx = frameCtx;
+                
+                let glowIntensity = 1;
+                let rotationAngle = 0;
+                
+                if (animationType === 'glow') {
+                    glowIntensity = 0.3 + 0.7 * (Math.sin((i / frameCount) * Math.PI * 4) * 0.5 + 0.5);
+                } else if (animationType === 'rotate') {
+                    rotationAngle = (i / frameCount) * Math.PI * 2;
+                } else if (animationType === 'pulse') {
+                    glowIntensity = 0.5 + 0.5 * Math.sin((i / frameCount) * Math.PI * 6);
+                }
+                
+                frameCtx.clearRect(0, 0, frameCanvas.width, frameCanvas.height);
+                const bg = document.getElementById('backgroundType').value;
+                drawBackground(bg);
+                
+                const centerX = frameCanvas.width / 2;
+                const centerY = frameCanvas.height / 2;
+                const baseSize = Math.min(frameCanvas.width, frameCanvas.height) * 0.6 * parseFloat(document.getElementById('iconScale').value);
+                const style = document.getElementById('logoStyle').value;
+                
+                if (rotationAngle !== 0) {
+                    frameCtx.save();
+                    frameCtx.translate(centerX, centerY);
+                    frameCtx.rotate(rotationAngle);
+                    frameCtx.translate(-centerX, -centerY);
+                }
+                
+                drawDiamondLogo(centerX, centerY, baseSize, style, glowIntensity);
+                
+                if (rotationAngle !== 0) {
+                    frameCtx.restore();
+                }
+                
+                frames.push(frameCanvas);
+                
+                window.ctx = tempCtx;
+            }
+            
+            return frames;
+        }
+
+        drawLogo();
+    </script>
+</body>
+
+</html>

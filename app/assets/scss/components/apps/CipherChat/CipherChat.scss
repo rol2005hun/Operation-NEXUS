@@ -1,0 +1,17 @@
+@use '@/assets/scss/variables' as *;
+
+.app-cipher-chat {
+    position: relative;
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    height: 100%;
+    background: $window-bg;
+    overflow: hidden;
+}
+
+.chat-type-label {
+    font-size: 0.85em;
+    color: #007acc;
+    margin-top: 2px;
+    font-weight: 500;
+}

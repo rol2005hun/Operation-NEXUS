@@ -1,0 +1,375 @@
+@use '@/assets/scss/variables' as *;
+@use 'sass:color';
+
+.app-default {
+    height: 100%;
+    background: $window-bg;
+    color: $text-primary;
+    overflow-y: auto;
+    padding: 1rem;
+}
+
+.error-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    background: linear-gradient(145deg, rgba(255, 67, 54, 0.1), rgba(255, 152, 0, 0.05));
+    border: 2px solid rgba(255, 67, 54, 0.3);
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 8px 32px rgba(255, 67, 54, 0.2);
+
+    .error-header {
+        text-align: center;
+        margin-bottom: 2rem;
+        padding-bottom: 1.5rem;
+        border-bottom: 2px solid rgba(255, 67, 54, 0.2);
+
+        .error-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            animation: pulse 2s infinite;
+        }
+
+        h2 {
+            margin-bottom: 1rem;
+            color: #ff4336;
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .error-message {
+            color: $text-primary;
+            font-size: 1.1rem;
+            font-weight: 600;
+            background: rgba(255, 67, 54, 0.1);
+            padding: 1rem;
+            border-radius: 8px;
+            border-left: 4px solid #ff4336;
+        }
+    }
+
+    .contact-info {
+        margin-bottom: 2rem;
+        padding: 1.5rem;
+        background: rgba(0, 122, 204, 0.1);
+        border-radius: 8px;
+        border-left: 4px solid $accent-blue;
+
+        h3 {
+            color: $accent-blue;
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        p {
+            color: $text-secondary;
+            margin: 0;
+        }
+    }
+
+    .debug-info {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+
+        .info-section {
+            background: $bg-secondary;
+            border-radius: 8px;
+            padding: 1.5rem;
+            border: 1px solid #444;
+
+            h4 {
+                color: $text-primary;
+                margin-bottom: 1rem;
+                font-size: 1.1rem;
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+            }
+
+            h5 {
+                color: $accent-blue;
+                margin-bottom: 0.5rem;
+                font-size: 1rem;
+            }
+
+            .info-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                gap: 1rem;
+
+                .info-item {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: flex-start;
+                    padding: 0.75rem;
+                    background: rgba(255, 255, 255, 0.05);
+                    border-radius: 6px;
+                    border: 1px solid rgba(255, 255, 255, 0.1);
+
+                    .label {
+                        color: $accent-blue;
+                        font-weight: 600;
+                        min-width: 120px;
+                        flex-shrink: 0;
+                    }
+
+                    .value {
+                        color: $text-primary;
+                        word-break: break-all;
+                        text-align: right;
+                        font-family: 'JetBrains Mono', monospace;
+                        font-size: 0.9rem;
+                    }
+                }
+            }
+
+            .logs-container {
+                .log-section {
+                    .log-items {
+                        max-height: 200px;
+                        overflow-y: auto;
+                        background: rgba(0, 0, 0, 0.3);
+                        border-radius: 6px;
+                        padding: 0.5rem;
+
+                        &::-webkit-scrollbar {
+                            width: 6px;
+                        }
+
+                        &::-webkit-scrollbar-track {
+                            background: rgba(255, 255, 255, 0.1);
+                            border-radius: 3px;
+                        }
+
+                        &::-webkit-scrollbar-thumb {
+                            background: rgba(0, 122, 204, 0.6);
+                            border-radius: 3px;
+
+                            &:hover {
+                                background: rgba(0, 122, 204, 0.8);
+                            }
+                        }
+
+                        .log-item {
+                            display: flex;
+                            gap: 0.5rem;
+                            padding: 0.25rem 0;
+                            font-family: 'JetBrains Mono', monospace;
+                            font-size: 0.8rem;
+                            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+
+                            &:last-child {
+                                border-bottom: none;
+                            }
+
+                            .log-time {
+                                color: $text-muted;
+                                min-width: 80px;
+                                flex-shrink: 0;
+                            }
+
+                            .log-content {
+                                color: $text-primary;
+                                word-break: break-word;
+                            }
+
+                            &.error {
+                                .log-content {
+                                    color: #ff4336;
+                                }
+                            }
+
+                            &.warn {
+                                .log-content {
+                                    color: #ff9800;
+                                }
+                            }
+
+                            &.log {
+                                .log-content {
+                                    color: $text-secondary;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                .no-logs {
+                    text-align: center;
+                    color: $text-muted;
+                    font-style: italic;
+                    padding: 2rem;
+                }
+            }
+
+            .action-list {
+                display: flex;
+                flex-direction: column;
+                gap: 0.75rem;
+
+                .action-item {
+                    display: flex;
+                    align-items: flex-start;
+                    gap: 1rem;
+                    padding: 1rem;
+                    background: rgba(76, 175, 80, 0.1);
+                    border-radius: 6px;
+                    border-left: 4px solid #4caf50;
+
+                    .action-number {
+                        background: #4caf50;
+                        color: white;
+                        width: 2rem;
+                        height: 2rem;
+                        border-radius: 50%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        font-weight: bold;
+                        flex-shrink: 0;
+                    }
+
+                    .action-text {
+                        color: $text-primary;
+                        font-weight: 500;
+                        line-height: 1.4;
+                    }
+                }
+            }
+        }
+
+        .export-section {
+            text-align: center;
+            padding: 1.5rem;
+            background: $bg-secondary;
+            border-radius: 8px;
+            border: 1px solid #444;
+
+            .copy-btn {
+                background: linear-gradient(145deg, $accent-blue, color.adjust($accent-blue, $lightness: -10%));
+                color: white;
+                border: none;
+                padding: 1rem 2rem;
+                border-radius: 8px;
+                font-size: 1.1rem;
+                font-weight: 600;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                box-shadow: 0 4px 15px rgba(0, 122, 204, 0.3);
+
+                &:hover {
+                    background: linear-gradient(145deg, color.adjust($accent-blue, $lightness: 5%), $accent-blue);
+                    transform: translateY(-2px);
+                    box-shadow: 0 6px 20px rgba(0, 122, 204, 0.4);
+                }
+
+                &:active {
+                    transform: translateY(0);
+                }
+            }
+
+            .copy-success {
+                margin-top: 1rem;
+                color: #4caf50;
+                font-weight: 600;
+                animation: fadeInOut 3s ease-in-out;
+            }
+        }
+    }
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.1);
+    }
+}
+
+@keyframes fadeInOut {
+    0% {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    20%,
+    80% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+}
+
+@media (max-width: 768px) {
+    .app-default {
+        padding: 0.5rem;
+    }
+
+    .error-container {
+        padding: 1rem;
+
+        .error-header {
+            .error-icon {
+                font-size: 3rem;
+            }
+
+            h2 {
+                font-size: 1.4rem;
+            }
+
+            .error-message {
+                font-size: 1rem;
+            }
+        }
+
+        .debug-info {
+            .info-section {
+                padding: 1rem;
+
+                .info-grid {
+                    grid-template-columns: 1fr;
+
+                    .info-item {
+                        flex-direction: column;
+                        align-items: flex-start;
+
+                        .value {
+                            text-align: left;
+                            margin-top: 0.25rem;
+                        }
+                    }
+                }
+
+                .action-list {
+                    .action-item {
+                        padding: 0.75rem;
+
+                        .action-number {
+                            width: 1.5rem;
+                            height: 1.5rem;
+                            font-size: 0.8rem;
+                        }
+                    }
+                }
+            }
+        }
+
+        .export-section {
+            padding: 1rem;
+
+            .copy-btn {
+                padding: 0.75rem 1.5rem;
+                font-size: 1rem;
+            }
+        }
+    }
+}

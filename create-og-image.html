@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Operation: NEXUS OG Image</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
+            color: white;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: #007acc;
+            font-size: 2.5em;
+            margin-bottom: 30px;
+            text-shadow: 0 0 20px rgba(0, 122, 204, 0.5);
+        }
+
+        canvas {
+            border: 2px solid #007acc;
+            border-radius: 15px;
+            margin: 20px 0;
+            box-shadow: 0 10px 30px rgba(0, 122, 204, 0.3);
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .buttons {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        button {
+            background: linear-gradient(45deg, #007acc, #00a8ff);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            margin: 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 122, 204, 0.3);
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(0, 122, 204, 0.5);
+        }
+
+        .preview-info {
+            text-align: center;
+            color: #b0b0b0;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Operation: NEXUS - OG Image Generator</h1>
+        <canvas id="canvas" width="1200" height="630"></canvas>
+
+        <div class="buttons">
+            <button onclick="downloadImage()">📸 Download OG Image</button>
+            <button onclick="downloadTwitterCard()">🐦 Download Twitter Card</button>
+        </div>
+
+        <div class="preview-info">
+            <p>OG Image: 1200×630px • Twitter Card: 1200×600px</p>
+            <p>Perfect for social media sharing and Discord previews</p>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+
+        function createOGImage() {
+            ctx.clearRect(0, 0, 1200, 630);
+
+            ctx.fillStyle = '#1a1a1a';
+            ctx.fillRect(0, 0, 1200, 630);
+
+            const bgGradient = ctx.createLinearGradient(0, 0, 1200, 630);
+            bgGradient.addColorStop(0, 'rgba(45, 45, 45, 0.3)');
+            bgGradient.addColorStop(0.5, 'rgba(26, 26, 26, 0.8)');
+            bgGradient.addColorStop(1, 'rgba(45, 45, 45, 0.3)');
+
+            ctx.fillStyle = bgGradient;
+            ctx.fillRect(0, 0, 1200, 630);
+
+            ctx.strokeStyle = '#007acc';
+            ctx.lineWidth = 3;
+            ctx.strokeRect(30, 30, 1140, 570);
+
+            ctx.strokeStyle = 'rgba(0, 122, 204, 0.3)';
+            ctx.lineWidth = 1;
+            ctx.strokeRect(35, 35, 1130, 560);
+
+            ctx.fillStyle = '#ffffff';
+            ctx.font = 'bold 72px Inter, system-ui, sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('Operation: NEXUS', 600, 180);
+
+            ctx.fillStyle = '#007acc';
+            ctx.font = '600 36px Inter, system-ui, sans-serif';
+            ctx.fillText('Digital Investigation Agency', 600, 240);
+
+            ctx.fillStyle = '#b0b0b0';
+            ctx.font = '400 24px Inter, system-ui, sans-serif';
+            ctx.fillText('Immersive laptop simulation for digital investigations', 600, 320);
+
+            ctx.fillStyle = '#888888';
+            ctx.font = '400 20px Inter, system-ui, sans-serif';
+            ctx.fillText('Analyze emails • Decode messages • Solve cyber crimes', 600, 360);
+
+            const buttonGradient = ctx.createLinearGradient(420, 420, 780, 480);
+            buttonGradient.addColorStop(0, '#007acc');
+            buttonGradient.addColorStop(1, '#005a9a');
+
+            ctx.fillStyle = buttonGradient;
+            ctx.roundRect(420, 420, 360, 60, 8);
+            ctx.fill();
+
+            ctx.strokeStyle = 'rgba(0, 122, 204, 0.5)';
+            ctx.lineWidth = 1;
+            ctx.roundRect(420, 420, 360, 60, 8);
+            ctx.stroke();
+
+            ctx.fillStyle = '#ffffff';
+            ctx.font = 'bold 26px Inter, system-ui, sans-serif';
+            ctx.fillText('START INVESTIGATION', 600, 460);
+
+            drawWebsiteStyleAccents();
+        }
+
+        function drawWebsiteStyleAccents() {
+            ctx.strokeStyle = '#007acc';
+            ctx.lineWidth = 2;
+
+            ctx.beginPath();
+            ctx.moveTo(60, 90);
+            ctx.lineTo(60, 60);
+            ctx.lineTo(90, 60);
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.moveTo(1110, 60);
+            ctx.lineTo(1140, 60);
+            ctx.lineTo(1140, 90);
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.moveTo(90, 570);
+            ctx.lineTo(60, 570);
+            ctx.lineTo(60, 540);
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.moveTo(1140, 540);
+            ctx.lineTo(1140, 570);
+            ctx.lineTo(1110, 570);
+            ctx.stroke();
+
+            ctx.strokeStyle = 'rgba(0, 122, 204, 0.1)';
+            ctx.lineWidth = 0.5;
+
+            for (let x = 100; x < 1100; x += 100) {
+                ctx.beginPath();
+                ctx.moveTo(x, 100);
+                ctx.lineTo(x, 530);
+                ctx.stroke();
+            }
+
+            for (let y = 120; y < 500; y += 80) {
+                ctx.beginPath();
+                ctx.moveTo(100, y);
+                ctx.lineTo(1100, y);
+                ctx.stroke();
+            }
+
+            ctx.fillStyle = '#007acc';
+            
+            const dots = [
+                { x: 150, y: 120 }, { x: 1050, y: 120 },
+                { x: 150, y: 510 }, { x: 1050, y: 510 }
+            ];
+
+            dots.forEach(dot => {
+                ctx.beginPath();
+                ctx.arc(dot.x, dot.y, 3, 0, Math.PI * 2);
+                ctx.fill();
+            });
+        }
+
+        if (!CanvasRenderingContext2D.prototype.roundRect) {
+            CanvasRenderingContext2D.prototype.roundRect = function (x, y, width, height, radius) {
+                this.beginPath();
+                this.moveTo(x + radius, y);
+                this.lineTo(x + width - radius, y);
+                this.quadraticCurveTo(x + width, y, x + width, y + radius);
+                this.lineTo(x + width, y + height - radius);
+                this.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+                this.lineTo(x + radius, y + height);
+                this.quadraticCurveTo(x, y + height, x, y + height - radius);
+                this.lineTo(x, y + radius);
+                this.quadraticCurveTo(x, y, x + radius, y);
+                this.closePath();
+            };
+        }
+
+        function downloadImage() {
+            const link = document.createElement('a');
+            link.download = 'og-image.png';
+            link.href = canvas.toDataURL();
+            link.click();
+        }
+
+        function downloadTwitterCard() {
+            canvas.height = 600;
+            createOGImage();
+
+            const link = document.createElement('a');
+            link.download = 'twitter-card.png';
+            link.href = canvas.toDataURL();
+            link.click();
+
+            canvas.height = 630;
+            createOGImage();
+        }
+
+        createOGImage();
+    </script>
+</body>
+
+</html>

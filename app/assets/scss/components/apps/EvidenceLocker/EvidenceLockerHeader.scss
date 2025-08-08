@@ -1,0 +1,46 @@
+@use '@/assets/scss/variables' as *;
+
+.evidence-locker-header {
+    background: $bg-secondary;
+    padding: 1rem;
+    border-bottom: 1px solid #444;
+
+    h2 {
+        margin: 0 0 0.5rem 0;
+        color: $text-primary;
+        font-size: 1.2rem;
+    }
+
+    .case-info {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .case-name {
+            color: $text-secondary;
+            font-weight: 500;
+        }
+
+        .case-status {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 600;
+
+            &.investigating {
+                background: rgba(255, 193, 7, 0.2);
+                color: #ffc107;
+            }
+
+            &.analyzing {
+                background: rgba(0, 122, 204, 0.2);
+                color: $accent-blue;
+            }
+
+            &.completed {
+                background: rgba(76, 175, 80, 0.2);
+                color: #4caf50;
+            }
+        }
+    }
+}
