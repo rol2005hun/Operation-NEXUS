@@ -1,6 +1,6 @@
 # NEXUS - Digital Investigation Agency 🕵️‍♂️
 
-An immersive FBI-style digital forensics investigation game built with Nuxt 3. **This is a demonstration build** showcasing the core investigation mechanics and laptop simulation features. Not all features or missions are available in this version.
+An immersive FBI-style digital forensics investigation game built with Nuxt 4. **This is a demonstration build** showcasing the core investigation mechanics and laptop simulation features. Not all features or missions are available in this version.
 
 ## 🎯 What is NEXUS?
 

@@ -4,11 +4,11 @@
 
 ## Project Overview
 
-This is a Nuxt 3 TypeScript project for creating an FBI-style investigation game called "NEXUS - Digital Investigation Agency". The game simulates a laptop environment where players can investigate different cases by exploring emails, messages, files, and other digital evidence.
+This is a Nuxt 4 TypeScript project for creating an FBI-style investigation game called "NEXUS - Digital Investigation Agency". The game simulates a laptop environment where players can investigate different cases by exploring emails, messages, files, and other digital evidence.
 
 ## Tech Stack
 
-- **Framework**: Nuxt 3 with TypeScript
+- **Framework**: Nuxt 4 with TypeScript
 - **Styling**: SCSS with custom variables
 - **State Management**: Pinia
 - **Fonts**: Inter (UI) and JetBrains Mono (code/terminal)
